@@ -1,0 +1,41 @@
+<div class="container-fluid padding">
+    <div class="row padding">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <p *ngIf="!todoItems">
+                <em>Loading...</em></p>
+
+
+            <table class='table table-striped' *ngIf="todoItems">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of todoItems">
+                        <td> {{item.id}}</td>
+                        <td><span><input type="checkbox" [checked]="item.isCompleted" class="mr-1 mt-1"
+                            (change)="ChangeStatus(item)"></span>
+                            <span [ngClass]="item.isCompleted?'text-success':'text-primary'">
+                                {{ item.description }}
+                            </span></td>
+                        <td>{{ item.IsCompleted?'Completed':'Not yet done' }}</td>
+                        <td><button type="button" class="btn btn-sm btn-outline-primary" (click)="DeleteTodoItem(item)">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <form [formGroup]="todoItemForm" (ngSubmit)="AddItem()">
+                <div class="form-group">
+                    <label for="itemDescription">Task:</label>
+                    <input type="text" formControlName="itemTitle" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.itemTitle.errors }" />
+                </div>
+                <button type="button" class="btn btn-sm btn-primary" (click)="AddItem()"> Add Item</button>
+            </form>
+        </div>
+    </div>
+</div>
